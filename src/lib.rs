@@ -97,6 +97,35 @@ impl Plugin for TilemapPlugin {
     }
 }
 
+pub struct TilemapPluginNoRender;
+
+impl Plugin for TilemapPluginNoRender {
+    fn build(&self, app: &mut bevy::prelude::App) {
+
+        app.add_systems(First, update_changed_tile_positions.in_set(TilemapFirstSet));
+
+        app.register_type::<FrustumCulling>()
+            .register_type::<TilemapId>()
+            .register_type::<TilemapSize>()
+            .register_type::<TilemapTexture>()
+            .register_type::<TilemapTileSize>()
+            .register_type::<TilemapGridSize>()
+            .register_type::<TilemapSpacing>()
+            .register_type::<TilemapTextureSize>()
+            .register_type::<TilemapType>()
+            .register_type::<TilemapAnchor>()
+            .register_type::<TilePos>()
+            .register_type::<TileTextureIndex>()
+            .register_type::<TileColor>()
+            .register_type::<TileVisible>()
+            .register_type::<TileFlip>()
+            .register_type::<TileStorage>()
+            .register_type::<TilePosOld>()
+            .register_type::<AnimatedTile>()
+            .configure_sets(First, TilemapFirstSet.after(TimeSystem));
+    }
+}
+
 #[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
 pub struct TilemapFirstSet;
 
